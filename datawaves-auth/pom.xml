@@ -62,9 +62,9 @@
       <version>1.18.24</version>
 		</dependency>
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-reactive-pg-client</artifactId>
-</dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-redis-client</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
