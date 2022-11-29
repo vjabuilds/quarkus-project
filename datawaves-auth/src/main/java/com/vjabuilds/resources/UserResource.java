@@ -51,7 +51,15 @@ public class UserResource {
         return usersRepo.login(model).map(
             x -> x != null ? Response.ok(x.auth())
                     .cookie(
-                        new NewCookie("refresh_token", x.refresh())
+                        new NewCookie("refresh_token", 
+                        x.refresh(), 
+                        null, null, 
+                        NewCookie.DEFAULT_VERSION, 
+                        null, 
+                        NewCookie.DEFAULT_MAX_AGE, 
+                        null, 
+                        false, 
+                        true)
                     ).build() 
                     :
                     Response.status(401, "Invalid username and password combiantion")
