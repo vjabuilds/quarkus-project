@@ -1,11 +1,10 @@
-package com.vjabuilds;
+package com.vjabuilds.resources;
 
 import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
 
 import com.vjabuilds.models.DatawavesUser;
 import com.vjabuilds.repos.UsersRepo;
