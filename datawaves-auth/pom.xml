@@ -69,7 +69,15 @@
       <groupId>com.password4j</groupId>
       <artifactId>password4j</artifactId>
       <version>1.6.1</version>
-  </dependency>
+    </dependency>
+    <dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-smallrye-jwt</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-smallrye-jwt-build</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
