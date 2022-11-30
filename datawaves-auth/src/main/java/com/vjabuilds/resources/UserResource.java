@@ -2,12 +2,10 @@ package com.vjabuilds.resources;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
@@ -29,19 +27,12 @@ public class UserResource {
     @Inject JsonWebToken jwt;
 
     @GET
-    @Path("/test")
-    @RolesAllowed({"User", "Admin"})
-    public String hello() {
-        return "Hello!";
-    }
-
-    @GET
     public Uni<List<DatawavesUser>> users(){
        return usersRepo.getUsers();
     }
 
     @POST
-    public Uni<Boolean> jovan(RegistrationModel model) {
+    public Uni<Boolean> register_user(RegistrationModel model) {
         return usersRepo.registerUser(model);
     }
 
