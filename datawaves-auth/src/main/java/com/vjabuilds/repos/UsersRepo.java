@@ -3,6 +3,7 @@ package com.vjabuilds.repos;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -33,7 +34,7 @@ public class UsersRepo {
     public Uni<Boolean> registerUser(RegistrationModel model)
     {
         DatawavesUser user = new DatawavesUser(
-            1l,
+            UUID.randomUUID().toString(),
             model.name(),
             model.lastName(),
             model.email(),

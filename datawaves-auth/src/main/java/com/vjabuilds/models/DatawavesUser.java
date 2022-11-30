@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DatawavesUser {
-    private Long user_id;
+    private String user_id;
     private String name;
     private String lastName;
     private String email;
