@@ -4,13 +4,14 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DatawavesUser {
-    private String user_id;
+@EqualsAndHashCode(callSuper=true)
+public class DatawavesUser extends BaseModel {
     private String name;
     private String lastName;
     private String email;

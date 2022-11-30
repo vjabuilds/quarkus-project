@@ -2,12 +2,13 @@ package com.vjabuilds.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
-    private Long role_id;
+@EqualsAndHashCode(callSuper = true)
+public class Role extends BaseModel {
     private String name;
 }

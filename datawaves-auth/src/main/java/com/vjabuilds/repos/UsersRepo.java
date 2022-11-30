@@ -34,15 +34,13 @@ public class UsersRepo {
     public Uni<Boolean> registerUser(RegistrationModel model)
     {
         DatawavesUser user = new DatawavesUser(
-            UUID.randomUUID().toString(),
             model.name(),
             model.lastName(),
             model.email(),
             Password.hash(model.password()).addRandomSalt().addPepper(salt).withArgon2().getResult(),
             true,
-            List.of(new Role(1l, "user"))
+            List.of(new Role("user"))
         );
-
         return this.redisDataSource.hash(DatawavesUser.class)
             .hset(TABLE_NAME, model.email(), user);
     }
