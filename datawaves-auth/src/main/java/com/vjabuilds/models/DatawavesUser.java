@@ -17,5 +17,5 @@ public class DatawavesUser extends BaseModel {
     private String email;
     private String password;
     private boolean enabled = true;
-    private List<Role> roles;
+    private List<String> roles;
 }

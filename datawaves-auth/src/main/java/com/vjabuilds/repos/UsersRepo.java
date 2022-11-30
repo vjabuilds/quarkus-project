@@ -39,7 +39,7 @@ public class UsersRepo {
             model.email(),
             Password.hash(model.password()).addRandomSalt().addPepper(salt).withArgon2().getResult(),
             true,
-            List.of(new Role("user"))
+            List.of("user")
         );
         return this.redisDataSource.hash(DatawavesUser.class)
             .hset(TABLE_NAME, model.email(), user);
@@ -63,9 +63,7 @@ public class UsersRepo {
                     String auth = Jwt.issuer("https://vjabuilds.dev")
                         .upn(x.user.getEmail())
                         .groups(
-                            new HashSet<>(x.user.getRoles().stream()
-                                .map(r -> r.getName())
-                                .collect(Collectors.toList()))
+                            new HashSet<>(x.user.getRoles())
                         ).sign();
                     String refresh = Jwt.issuer("https://vjabuilds.dev")
                         .upn(x.user.getEmail())
