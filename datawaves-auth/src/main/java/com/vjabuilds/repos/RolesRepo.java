@@ -48,6 +48,21 @@ public class RolesRepo {
                     return redisDataSource.hash(DatawavesUser.class)
                         .hset(UsersRepo.TABLE_NAME, user.getEmail(), user).map(res -> true);
                 }
+            }
+        );
+    }
+
+    public Uni<Boolean> revokeUserRole(String username, String role_name) {
+        return redisDataSource.hash(DatawavesUser.class).hget(UsersRepo.TABLE_NAME, username)
+            .flatMap(x -> {
+                if(x == null)
+                    return Uni.createFrom().item(false);
+                else {
+                    x.getRoles().remove(role_name);
+                    x.setUpdated(ZonedDateTime.now());
+                    return redisDataSource.hash(DatawavesUser.class)
+                        .hset(UsersRepo.TABLE_NAME, username, x).map(res -> true);
+                }
             });
     }
 }

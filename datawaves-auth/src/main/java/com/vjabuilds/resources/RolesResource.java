@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -12,7 +13,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import com.vjabuilds.models.Role;
 import com.vjabuilds.repos.RolesRepo;
 import com.vjabuilds.view_models.CreateRoleModel;
-import com.vjabuilds.view_models.GiveUserRoleModel;
+import com.vjabuilds.view_models.UserRoleModel;
 
 import io.smallrye.mutiny.Uni;
 import lombok.AllArgsConstructor;
@@ -34,9 +35,15 @@ public class RolesResource {
             return repo.createRole(model.role_name());
         }
 
-        @POST
+        @PUT
         @Path("/grant")
-        public Uni<Boolean> giveUserRole(GiveUserRoleModel model) {
+        public Uni<Boolean> giveUserRole(UserRoleModel model) {
             return repo.giveUserRole(model.username(), model.role_name());
+        }
+
+        @PUT
+        @Path("/revoke")
+        public Uni<Boolean> revokeUserRole(UserRoleModel model) {
+            return repo.revokeUserRole(model.username(), model.role_name());
         }
 }
