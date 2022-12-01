@@ -2,6 +2,7 @@ package com.vjabuilds.resources;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 
 @Path("/roles")
 @AllArgsConstructor
+@RolesAllowed({"admin"})
 public class RolesResource {
         @Inject JsonWebToken jwt;
         @Inject RolesRepo repo;

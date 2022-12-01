@@ -27,7 +27,7 @@ public class UsersRepo {
     public static final String TABLE_NAME = "users";
 
     @ConfigProperty(name = "secret_salt")
-    private String salt;
+    String salt;
 
     public Uni<Boolean> registerUser(RegistrationModel model)
     {
