@@ -9,6 +9,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import com.password4j.Password;
 import com.vjabuilds.models.DatawavesUser;
@@ -17,6 +19,7 @@ import com.vjabuilds.view_models.LoginModel;
 import com.vjabuilds.view_models.RegistrationModel;
 
 import io.smallrye.jwt.build.Jwt;
+import io.jsonwebtoken.JwtParser;
 import io.quarkus.redis.datasource.ReactiveRedisDataSource;
 import io.smallrye.mutiny.Uni;
 
@@ -65,11 +68,27 @@ public class UsersRepo {
                         ).sign();
                     String refresh = Jwt.issuer("https://vjabuilds.dev")
                         .upn(x.user.getEmail())
+                        .audience("https://vjabuilds.dev/refresh")
                         .expiresIn(24*60*60)
                         .sign();
                     return new AuthRefreshToken(auth, refresh);
                 }
                 return null;
+            });
+    }
+
+    public Uni<String> refresh(JsonWebToken jwt)
+    {   
+        String username = jwt.getClaim(Claims.upn);
+        return this.redisDataSource.hash(DatawavesUser.class)
+            .hget(TABLE_NAME, username)
+            .map(x -> {
+                String auth = Jwt.issuer("https://vjabuilds.dev")
+                    .upn(x.getEmail())
+                    .groups(
+                        new HashSet<>(x.getRoles())
+                    ).sign();
+                return auth;
             });
     }
 }
