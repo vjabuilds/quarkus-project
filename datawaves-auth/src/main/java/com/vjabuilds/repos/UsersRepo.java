@@ -39,7 +39,7 @@ public class UsersRepo {
             List.of("user")
         );
         return this.redisDataSource.hash(DatawavesUser.class)
-            .hset(TABLE_NAME, model.email(), user);
+            .hsetnx(TABLE_NAME, model.email(), user);
     }
 
     public Uni<List<DatawavesUser>> getUsers()

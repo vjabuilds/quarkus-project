@@ -32,8 +32,10 @@ public class UserResource {
     }
 
     @POST
-    public Uni<Boolean> register_user(RegistrationModel model) {
-        return usersRepo.registerUser(model);
+    public Uni<Response> register_user(RegistrationModel model) {
+        return usersRepo.registerUser(model).map(x -> x ? 
+            Response.ok().build() : Response.status(409).build()
+        );
     }
 
     @POST
