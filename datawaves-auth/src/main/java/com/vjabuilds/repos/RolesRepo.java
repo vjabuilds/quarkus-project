@@ -42,10 +42,11 @@ public class RolesRepo {
                 }
                 else 
                 {
-                    user.getRoles().add(role.getName());
-                    user.setUpdated(ZonedDateTime.now());
+                    user.getRoles().add(role.getName());  // TODO: role might have been deleted between 
+                    user.setUpdated(ZonedDateTime.now()); // fetching role info and assignement. Should implement
+                                                          // either optimistic locking or role checking on user read.
                     return redisDataSource.hash(DatawavesUser.class)
-                        .hset(UsersRepo.TABLE_NAME, user.getEmail(), user);
+                        .hset(UsersRepo.TABLE_NAME, user.getEmail(), user).map(res -> true);
                 }
             });
     }
