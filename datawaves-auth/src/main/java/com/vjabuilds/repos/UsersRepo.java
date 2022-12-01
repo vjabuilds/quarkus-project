@@ -3,8 +3,6 @@ package com.vjabuilds.repos;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,7 +11,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.password4j.Password;
 import com.vjabuilds.models.DatawavesUser;
-import com.vjabuilds.models.Role;
 import com.vjabuilds.view_models.AuthRefreshToken;
 import com.vjabuilds.view_models.LoginModel;
 import com.vjabuilds.view_models.RegistrationModel;
@@ -26,7 +23,7 @@ import io.smallrye.mutiny.Uni;
 public class UsersRepo {
     @Inject ReactiveRedisDataSource redisDataSource;
 
-    private static final String TABLE_NAME = "users";
+    public static final String TABLE_NAME = "users";
 
     @ConfigProperty(name = "secret_salt")
     private String salt;
