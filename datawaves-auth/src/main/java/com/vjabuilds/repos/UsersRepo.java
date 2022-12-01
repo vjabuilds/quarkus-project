@@ -19,7 +19,6 @@ import com.vjabuilds.view_models.LoginModel;
 import com.vjabuilds.view_models.RegistrationModel;
 
 import io.smallrye.jwt.build.Jwt;
-import io.jsonwebtoken.JwtParser;
 import io.quarkus.redis.datasource.ReactiveRedisDataSource;
 import io.smallrye.mutiny.Uni;
 
@@ -31,6 +30,12 @@ public class UsersRepo {
 
     @ConfigProperty(name = "secret_salt")
     String salt;
+
+    @ConfigProperty(name = "datawaves.jwt.auth-length")
+    Long authLength;
+
+    @ConfigProperty(name = "datawaves.jwt.refresh-length")
+    Long refreshLength;
 
     public Uni<Boolean> registerUser(RegistrationModel model)
     {
@@ -63,13 +68,14 @@ public class UsersRepo {
                 if(x.valid){
                     String auth = Jwt.issuer("https://vjabuilds.dev")
                         .upn(x.user.getEmail())
+                        .expiresIn(authLength)
                         .groups(
                             new HashSet<>(x.user.getRoles())
                         ).sign();
                     String refresh = Jwt.issuer("https://vjabuilds.dev")
                         .upn(x.user.getEmail())
                         .audience("https://vjabuilds.dev/refresh")
-                        .expiresIn(24*60*60)
+                        .expiresIn(refreshLength)
                         .sign();
                     return new AuthRefreshToken(auth, refresh);
                 }
