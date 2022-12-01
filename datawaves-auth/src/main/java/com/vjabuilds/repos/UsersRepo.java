@@ -3,6 +3,7 @@ package com.vjabuilds.repos;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -36,7 +37,7 @@ public class UsersRepo {
             model.email(),
             Password.hash(model.password()).addRandomSalt().addPepper(salt).withArgon2().getResult(),
             true,
-            List.of("user")
+            Set.of("user")
         );
         return this.redisDataSource.hash(DatawavesUser.class)
             .hsetnx(TABLE_NAME, model.email(), user);

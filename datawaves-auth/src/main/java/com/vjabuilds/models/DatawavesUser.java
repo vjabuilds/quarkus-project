@@ -1,6 +1,6 @@
 package com.vjabuilds.models;
 
-import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +17,5 @@ public class DatawavesUser extends BaseModel {
     private String email;
     private String password;
     private boolean enabled = true;
-    private List<String> roles;
+    private Set<String> roles;
 }
